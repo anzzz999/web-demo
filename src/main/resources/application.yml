@@ -1,0 +1,81 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: mengan-web-demo
+  profiles:
+    active: @packaging@,alone
+  cache:
+    ehcache:
+      config: ehcache/ehcache.xml
+    type: redis
+  redis:
+    host: 120.24.22.59
+    port: 6379
+    database: 0
+    password: 123456
+    expireTime: 86400
+    lettuce:
+      pool:
+        max-active: 16
+        max-wait: 1s
+        max-idle: 8
+        min-idle: 4
+  datasource:
+    dynamic:
+      #      druid: #以下是全局默认值，可以全局更改
+      #        initial-size:
+      #        max-active:
+      #        min-idle:
+      #        max-wait:
+      #        time-between-eviction-runs-millis:
+      #        time-between-log-stats-millis:
+      #        stat-sqlmax-size:
+      #        min-evictable-idle-time-millis:
+      #        max-evictable-idle-time-millis:
+      #        test-while-idle:
+      #        test-on-borrow:
+      #        test-on-return:
+      #        validation-query:
+      #        validation-query-timeout:
+      #        use-global-datasource-stat:
+      #        async-init:
+      #        clear-filters-enable:
+      #        reset-stat-enable:
+      #        not-full-timeout-retry-count:
+      #        max-wait-thread-count:
+      #        fail-fast:
+      #        phyTimeout-millis:
+      #        keep-alive:
+      #        pool-prepared-statements:
+      #        init-variants:
+      #        init-global-variants:
+      #        use-unfair-lock:
+      #        kill-when-socket-read-timeout:
+      #        connection-properties:
+      #        max-pool-prepared-statement-per-connection-size:
+      #        init-connection-sqls:
+      #        share-prepared-statements:
+      #        connection-errorretry-attempts:
+      #        break-after-acquire-failure:
+      #        filters: stat,wall # 注意这个值和druid原生不一致，默认启动了stat,wall
+      datasource:
+        master:
+          url: jdbc:mysql://47.106.221.10:3306/ecip_api?nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+          username: root
+          password: qwer123
+          druid: #这里可以重写默认值
+            validationQuery: SELECT 'x'
+
+#elasticsearch:
+#  host: 120.24.22.59
+#  port: 9200

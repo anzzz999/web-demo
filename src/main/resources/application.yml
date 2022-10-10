@@ -21,7 +21,7 @@ spring:
   redis:
     host: 120.24.22.59
     port: 6379
-    database: 0
+    database: 11
     password: 123456
     expireTime: 86400
     lettuce:
@@ -32,50 +32,29 @@ spring:
         min-idle: 4
   datasource:
     dynamic:
-      #      druid: #以下是全局默认值，可以全局更改
-      #        initial-size:
-      #        max-active:
-      #        min-idle:
-      #        max-wait:
-      #        time-between-eviction-runs-millis:
-      #        time-between-log-stats-millis:
-      #        stat-sqlmax-size:
-      #        min-evictable-idle-time-millis:
-      #        max-evictable-idle-time-millis:
-      #        test-while-idle:
-      #        test-on-borrow:
-      #        test-on-return:
-      #        validation-query:
-      #        validation-query-timeout:
-      #        use-global-datasource-stat:
-      #        async-init:
-      #        clear-filters-enable:
-      #        reset-stat-enable:
-      #        not-full-timeout-retry-count:
-      #        max-wait-thread-count:
-      #        fail-fast:
-      #        phyTimeout-millis:
-      #        keep-alive:
-      #        pool-prepared-statements:
-      #        init-variants:
-      #        init-global-variants:
-      #        use-unfair-lock:
-      #        kill-when-socket-read-timeout:
-      #        connection-properties:
-      #        max-pool-prepared-statement-per-connection-size:
-      #        init-connection-sqls:
-      #        share-prepared-statements:
-      #        connection-errorretry-attempts:
-      #        break-after-acquire-failure:
-      #        filters: stat,wall # 注意这个值和druid原生不一致，默认启动了stat,wall
+      primary: mysql1
+      strict: true
       datasource:
-        master:
-          url: jdbc:mysql://47.106.221.10:3306/ecip_api?nullCatalogMeansCurrent=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+        mysql1:
+          url: jdbc:mysql://localhost:3306/ecip_api?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
           username: root
-          password: qwer123
-          druid: #这里可以重写默认值
-            validationQuery: SELECT 'x'
-
+          password: 123456
+          druid:
+            initial-size: 1 #连接池初始化大小
+            min-idle: 0 #最小空闲连接数
+            max-active: 5 #最大连接数
+            web-stat-filter:
+              exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+            stat-view-servlet: #访问监控网页的登录用户名和密码
+              login-username: druid
+              login-password: druid
+# mybatis配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
 #elasticsearch:
 #  host: 120.24.22.59
 #  port: 9200
+logging:
+  level:
+    root: DEBUG
